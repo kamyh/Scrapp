@@ -31,15 +31,43 @@ $divs = [];
 foreach($productsDescription as $item)
 {
     echo '<div style="color:#166776;">' .$item->getNodePath().'</div></br>';
-    array_push($divs,new Div($item->getAttribute('class'),$item->getAttribute('id'),$item->getAttribute('value'),$item->getAttribute('style'),substr_count($item->getNodePath(), '/')-2));
+    array_push($divs,new Div($item->getAttribute('class'),$item->getAttribute('id'),$item->getAttribute('value'),$item->getAttribute('style'),substr_count($item->getNodePath(), '/')-2,$item->nodeValue));
 }
 
-echo var_dump($divs);
+$prevDepth = 0;
 
+
+    $elem = $DOM->getElementById("2");
+    $new= $DOM->createElement('div');
+    $new->setAttribute('class', 'NEW');
+
+    foreach($elem->childNodes as $child)
+    {
+        $new->appendChild($child);
+    }
+    $elem->parentNode->replaceChild($new,$elem);
+    $new->appendChild($elem->firstChild);
+
+    //echo $DOM->saveHTML();
+
+
+echo $DOM->saveHTML();
+
+/*
 foreach($divs as $div)
 {
     //TODO close each div at right moment
-    echo $div->toString().'</div></br>';
+    $toEcho = $div->toString().'</br>';
+
+    if($div->getDepth() < $prevDepth)
+    {
+        $toEcho .= $div->getContent();
+        $toEcho .= '</div></br>';
+    }
+
+    $prevDepth = $div->getDepth();
+    echo '--> '.$prevDepth;
+    echo $toEcho;
 }
 
 /*
