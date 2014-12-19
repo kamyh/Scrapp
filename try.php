@@ -1,10 +1,12 @@
-﻿<?php
+<?php
 /**
  * Created by PhpStorm.
  * User: kamhyh
  * Date: 18.12.2014
  * Time: 22:12
  */
+
+require_once('regex.php');
 
 $url = "http://www.qoqa.ch/";
 $html = file_get_contents($url); //get the html returned from the following url
@@ -20,11 +22,16 @@ $xpath = new DOMXPath($DOM);
  */
 $productsDescription = $xpath->query('//div');  //get all div
 
+$selection = '/html/body';
+$reg = new regex();
+
 var_dump($xpath);
 
 foreach($productsDescription as $item)
 {
     echo '------------------------------------------------';
+    echo '<div style="color:#166776;">' .$reg->isOneDivLvlOne($item->getNodePath()).'</div></br>';
+    echo '<div style="color:#166776;">' .$reg->isOneDivLvlOneWithHook($item->getNodePath()).'</div></br>';
     echo '<div style="color:blue;">'.$item->getNodePath().'</div></br>';
     echo '<div style="color:red;">'.$item->getAttribute('class').'</div></br>';
     echo '<div style="color:#ff8f08;">' .$item->getAttribute('id').'</div></br>';
