@@ -34,27 +34,26 @@ foreach($productsDescription as $item)
     array_push($divs,new Div($item->getAttribute('class'),$item->getAttribute('id'),$item->getAttribute('value'),$item->getAttribute('style'),substr_count($item->getNodePath(), '/')-2,$item->nodeValue));
 }
 
-$overlay = 'filter: alpha(opacity=50); /*older IE*/
-	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=50); /* IE */
-	-moz-opacity: .50; /*older Mozilla*/
-	-khtml-opacity: 0.5;   /*older Safari*/
-	opacity: 0.5;   /*supported by current Mozilla, Safari, and Opera*/
-	background-color:red;';
+$overlay = 'z-index:10000;
+	background-color: rgba(0,0,0,0.5);';
 
-$elem = $DOM->getElementById("2");
+$elem = $DOM->getElementById("1");
 $new= $DOM->createElement('div');
-$new->setAttribute('id', '2');
+$new->setAttribute('id', 'n');
 $intersect = $DOM->createElement('div');
 $intersect->setAttribute('id', 'intersect');
 $intersect->setAttribute('style',$overlay);
 $intersect->appendChild($new);
 
-foreach($elem->childNodes as $child)
+
+$array = iterator_to_array($elem->childNodes);
+foreach($array as $child)
 {
     $new->appendChild($child);
 }
 $elem->parentNode->replaceChild($intersect,$elem);
-$new->appendChild($elem->firstChild);
+
+//$new->appendChild($elem->firstChild);
 
 //echo $DOM->saveHTML();
 
