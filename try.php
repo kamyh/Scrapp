@@ -8,6 +8,7 @@
 
 require_once('regex.php');
 require_once('Model/Div.php');
+require_once('Model/Tools.php');
 
 $url = "./pagetest.php";
 $html = file_get_contents($url); //get the html returned from the following url
@@ -53,12 +54,9 @@ foreach($array as $child)
 }
 $elem->parentNode->replaceChild($intersect,$elem);
 
-//$new->appendChild($elem->firstChild);
-
-//echo $DOM->saveHTML();
-
-
 echo $DOM->saveHTML();
+
+echo Tools::depth('html/body/div');
 
 /*
 foreach($divs as $div)
