@@ -9,6 +9,6 @@
 class Tools {
     public static function depth($str)
     {
-        return substr_count($str, '/') - 1;
+        return substr_count($str, '/') - 2;
     }
 }

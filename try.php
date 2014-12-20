@@ -40,6 +40,23 @@ foreach($productsDescription as $item)
 }
 */
 
+function searchDiv($depth,$xpath)
+{
+    $result = Array();
+
+    $xpathIntoIterable = $xpath->query('//div');
+
+    foreach($xpathIntoIterable as $item)
+    {
+        if(Tools::depth($item->getNodePath()) == $depth)
+        {
+            array_push($result,$item);
+        }
+    }
+
+    return $result;
+}
+
 function splitDiv($DOM)
 {
     $overlay = 'z-index:10000;
@@ -82,9 +99,6 @@ echo '<div>Parsed</div>';
 echo '---------------------------------';
 
 echo $DOM->saveHTML();
-
-//echo Tools::depth('html/body/div');
-
 
 
 
