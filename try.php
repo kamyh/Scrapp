@@ -107,19 +107,33 @@ $index = 0;
 //color all node lvl 1 with different color
 foreach($divLvlOne as $divNode)
 {
-    $DOM = splitDiv($DOM,$divNode->getAttribute('id'),$colors[$index]);
+    $DOM = splitDiv($DOM,$divNode->getAttribute('id'),$colors[$index%count($colors)]);
     $index++;
 }
 
+
+//RESPLIT first splitted div
+$DOM->loadHTML($DOM->saveHTML());
+
+$elem = $DOM->getElementById('intersect')->firstChild;
+//var_dump($elem);
+
+$subTags = iterator_to_array($elem->childNodes);
+
+//var_dump($subTags);
+
+foreach($subTags as $child)
+{
+    if($child->nodeType != 3)
+    {
+        //echo $child->getAttribute('id').'</br>';
+        $DOM = splitDiv($DOM,$child->getAttribute('id'),$colors[$index%count($colors)]);
+        $index++;
+    }
+}
+
+
 echo $DOM->saveHTML();
-
-$elem = $DOM->getElementById('intersect');
-var_dump($elem->childNodes);
-
-
-
-
-
 
 
 
