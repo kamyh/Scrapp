@@ -1,7 +1,11 @@
 <script language="JavaScript">
-    function divClicked()
+    function divClicked(input)
     {
-        alert("**");
+        alert(input);
+
+        window.event.stopPropagation();
+
+        location.href = location.href + "?parameter=" + input;
     }
 
 </script>
@@ -13,6 +17,8 @@
  * Date: 18.12.2014
  * Time: 22:12
  */
+
+$parameter = $_GET['parameter'];
 
 require_once('regex.php');
 require_once('Model/Div.php');
@@ -81,7 +87,7 @@ function splitDiv($DOM,$id,$color)
 
     $intersect = $DOM->createElement('div');
     $intersect->setAttribute('id', 'intersect');
-    $intersect->setAttribute('onClick', 'divClicked();');
+    $intersect->setAttribute('onClick', 'divClicked(this.id);');
     $intersect->setAttribute('class', $elem->getAttribute('class'));
     $intersect->setAttribute('style',$overlay.$elem->getAttribute('style'));
     $intersect->appendChild($new);
