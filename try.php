@@ -10,9 +10,11 @@ require_once('regex.php');
 require_once('Model/Div.php');
 require_once('Model/Tools.php');
 
+/*
+ * Prepare the page to parse
+ */
 $url = "./pagetest.php";
 $html = file_get_contents($url); //get the html returned from the following url
-
 $DOM = new DOMDocument('1.0', 'UTF-8');
 $DOM->loadHTML($html);
 libxml_clear_errors();
@@ -38,30 +40,36 @@ foreach($productsDescription as $item)
 }
 */
 
-$overlay = 'z-index:10000;
+function splitDiv($DOM)
+{
+    $overlay = 'z-index:10000;
 	background-color: rgba(0,0,0,0.4);';
 
+    $elem = $DOM->getElementById("1");
+    $new= $DOM->createElement('div');
 
-$elem = $DOM->getElementById("1");
-$new= $DOM->createElement('div');
+    $new->setAttribute('id', $elem->getAttribute('id'));
+    $new->setAttribute('class', $elem->getAttribute('class'));
+    $new->setAttribute('style', $elem->getAttribute('style'));
 
-$new->setAttribute('id', $elem->getAttribute('id'));
-$new->setAttribute('class', $elem->getAttribute('class'));
-$new->setAttribute('style', $elem->getAttribute('style'));
-
-$intersect = $DOM->createElement('div');
-$intersect->setAttribute('id', 'intersect');
-$intersect->setAttribute('class', $elem->getAttribute('class'));
-$intersect->setAttribute('style',$overlay.$elem->getAttribute('style'));
-$intersect->appendChild($new);
+    $intersect = $DOM->createElement('div');
+    $intersect->setAttribute('id', 'intersect');
+    $intersect->setAttribute('class', $elem->getAttribute('class'));
+    $intersect->setAttribute('style',$overlay.$elem->getAttribute('style'));
+    $intersect->appendChild($new);
 
 
-$array = iterator_to_array($elem->childNodes);
-foreach($array as $child)
-{
-    $new->appendChild($child);
+    $array = iterator_to_array($elem->childNodes);
+    foreach($array as $child)
+    {
+        $new->appendChild($child);
+    }
+    $elem->parentNode->replaceChild($intersect,$elem);
+
+    return $DOM;
 }
-$elem->parentNode->replaceChild($intersect,$elem);
+
+$DOM = splitDiv($DOM);
 
 echo '<div>Original</div>';
 echo '---------------------------------';
