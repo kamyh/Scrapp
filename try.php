@@ -55,6 +55,8 @@ foreach($productsDescription as $item)
 }
 */
 
+
+
 function searchDiv($depth,$xpath)
 {
     $result = Array();
@@ -72,8 +74,24 @@ function searchDiv($depth,$xpath)
     return $result;
 }
 
+function countDiv($xpath)
+{
+    $arrayOfXPath = $xpath->query('//div');  //get all div
+
+    $result = 0;
+    foreach($arrayOfXPath as $item)
+    {
+        if(regex::isIntersect($item->getAttribute('id')))
+        {
+            $result++;
+        }
+    }
+
+    return $result;
+}
+
 //TODO maybe do this without id selection too
-function splitDiv($DOM,$id,$color)
+function splitDiv($DOM,$id,$color,$xpath)
 {
     $overlay = 'z-index:10000;
 	background-color:'.$color.';';
@@ -86,7 +104,7 @@ function splitDiv($DOM,$id,$color)
     $new->setAttribute('style', $elem->getAttribute('style'));
 
     $intersect = $DOM->createElement('div');
-    $intersect->setAttribute('id', 'intersect');
+    $intersect->setAttribute('id', 'intersect'.countDiv($xpath));
     $intersect->setAttribute('onClick', 'divClicked(this.id);');
     $intersect->setAttribute('class', $elem->getAttribute('class'));
     $intersect->setAttribute('style',$overlay.$elem->getAttribute('style'));
@@ -122,11 +140,11 @@ $index = 0;
 //color all node lvl 1 with different color
 foreach($divLvlOne as $divNode)
 {
-    $DOM = splitDiv($DOM,$divNode->getAttribute('id'),$colors[$index%count($colors)]);
+    $DOM = splitDiv($DOM,$divNode->getAttribute('id'),$colors[$index%count($colors)],$xpath);
     $index++;
 }
 
-
+/*
 //RESPLIT first splitted div
 $DOM->loadHTML($DOM->saveHTML());
 
@@ -143,11 +161,11 @@ foreach($subTags as $child)
         $index++;
     }
 }
-
+*/
 
 echo $DOM->saveHTML();
 
-
+echo countDiv($xpath);
 
 
 

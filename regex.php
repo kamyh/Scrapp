@@ -32,6 +32,21 @@ class regex {
         return False;
     }
 
+    public static function isIntersect($str)
+    {
+        $txt='intersect8';
+
+        $re1='(intersect)';	# Word 1
+        $re2='(\\d+)';	# Integer Number 1
+
+        if ($c=preg_match_all ("/".$re1.$re2."/is", $str, $matches))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public function isOneDivLvlOneWithHook($str)
     {
         $txt='/html/body/div[8]';
