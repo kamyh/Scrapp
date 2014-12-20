@@ -5,7 +5,7 @@
 
         window.event.stopPropagation();
 
-        location.href = location.href + "?parameter=" + input;
+        location.href = 'http://127.0.0.1:88/scrapp/try.php' + "?parameter=" + input;
     }
 
 </script>
@@ -17,8 +17,34 @@
  * Date: 18.12.2014
  * Time: 22:12
  */
+error_reporting(E_ERROR | E_PARSE);
+session_start();
 
-$parameter = $_GET['parameter'];
+$idDivToSplit = $_GET['parameter'];
+echo $idDivToSplit;
+
+if(isset($_GET['parameter']))
+{
+    if(!isset($_SESSION['arrayIdDivToSplit']))
+    {
+        $_SESSION['arrayIdDivToSplit'] = array($_GET['parameter']);
+    }
+    else
+    {
+        if (!in_array($_GET['parameter'],$_SESSION['arrayIdDivToSplit']))
+        {
+            array_push($_SESSION['arrayIdDivToSplit'], $_GET['parameter']);
+        }
+    }
+}
+else
+{
+    session_unset();
+    $_SESSION['arrayIdDivToSplit'] = array();
+}
+
+$arrayIdDivToSplit = $_SESSION['arrayIdDivToSplit'];
+var_dump($arrayIdDivToSplit);
 
 require_once('regex.php');
 require_once('Model/Div.php');
@@ -144,24 +170,26 @@ foreach($divLvlOne as $divNode)
     $index++;
 }
 
-/*
-//RESPLIT first splitted div
-$DOM->loadHTML($DOM->saveHTML());
 
-$elem = $DOM->getElementById('intersect')->firstChild;
+//RESPLIT
 
-$subTags = iterator_to_array($elem->childNodes);
-
-foreach($subTags as $child)
+foreach($arrayIdDivToSplit as $toSplitDiv)
 {
-    if($child->nodeType != 3)
-    {
-        //echo $child->getAttribute('id').'</br>';
-        $DOM = splitDiv($DOM,$child->getAttribute('id'),$colors[$index%count($colors)]);
-        $index++;
+    $DOM->loadHTML($DOM->saveHTML());
+
+    $elem = $DOM->getElementById($toSplitDiv)->firstChild;
+
+    $subTags = iterator_to_array($elem->childNodes);
+
+    foreach ($subTags as $child) {
+        if ($child->nodeType != 3) {
+            //echo $child->getAttribute('id').'</br>';
+            $DOM = splitDiv($DOM, $child->getAttribute('id'), $colors[$index % count($colors)], $xpath);
+            $index++;
+        }
     }
 }
-*/
+
 
 echo $DOM->saveHTML();
 
