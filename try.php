@@ -1,3 +1,11 @@
+<script language="JavaScript">
+    function divClicked()
+    {
+        alert("**");
+    }
+
+</script>
+
 <?php
 /**
  * Created by PhpStorm.
@@ -73,6 +81,7 @@ function splitDiv($DOM,$id,$color)
 
     $intersect = $DOM->createElement('div');
     $intersect->setAttribute('id', 'intersect');
+    $intersect->setAttribute('onClick', 'divClicked();');
     $intersect->setAttribute('class', $elem->getAttribute('class'));
     $intersect->setAttribute('style',$overlay.$elem->getAttribute('style'));
     $intersect->appendChild($new);
@@ -116,11 +125,8 @@ foreach($divLvlOne as $divNode)
 $DOM->loadHTML($DOM->saveHTML());
 
 $elem = $DOM->getElementById('intersect')->firstChild;
-//var_dump($elem);
 
 $subTags = iterator_to_array($elem->childNodes);
-
-//var_dump($subTags);
 
 foreach($subTags as $child)
 {
