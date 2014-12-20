@@ -9,6 +9,7 @@
 require_once('regex.php');
 require_once('Model/Div.php');
 require_once('Model/Tools.php');
+require_once('Model/Color.php');
 
 /*
  * Prepare the page to parse
@@ -57,12 +58,13 @@ function searchDiv($depth,$xpath)
     return $result;
 }
 
-function splitDiv($DOM)
+//TODO maybe do this without id selection too
+function splitDiv($DOM,$id,$color)
 {
     $overlay = 'z-index:10000;
-	background-color: rgba(0,0,0,0.4);';
+	background-color:'.$color.';';
 
-    $elem = $DOM->getElementById("1");
+    $elem = $DOM->getElementById($id);
     $new= $DOM->createElement('div');
 
     $new->setAttribute('id', $elem->getAttribute('id'));
@@ -86,7 +88,7 @@ function splitDiv($DOM)
     return $DOM;
 }
 
-$DOM = splitDiv($DOM);
+//$DOM = splitDiv($DOM,1);
 
 echo '<div>Original</div>';
 echo '---------------------------------';
@@ -98,10 +100,21 @@ echo '========================================';
 echo '<div>Parsed</div>';
 echo '---------------------------------';
 
+$divLvlOne = searchDiv(1,$xpath);
+
+$index = 0;
+
+//color all node lvl 1 with different color
+foreach($divLvlOne as $divNode)
+{
+    $DOM = splitDiv($DOM,$divNode->getAttribute('id'),$colors[$index]);
+    $index++;
+}
+
 echo $DOM->saveHTML();
 
-
-
+$elem = $DOM->getElementById('intersect');
+var_dump($elem->childNodes);
 
 
 
