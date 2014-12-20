@@ -1,13 +1,14 @@
 <script language="JavaScript">
     function divClicked(input)
     {
-        alert(input);
-
         window.event.stopPropagation();
-
         location.href = 'http://127.0.0.1:88/scrapp/try.php' + "?parameter=" + input;
     }
 
+    function checkBoxClicked()
+    {
+        window.event.stopPropagation();
+    }
 </script>
 
 <?php
@@ -125,29 +126,42 @@ function splitDiv($DOM,$id,$color,$xpath)
     $elem = $DOM->getElementById($id);
     $new= $DOM->createElement('div');
 
-    $new->setAttribute('id', $elem->getAttribute('id'));
-    $new->setAttribute('class', $elem->getAttribute('class'));
-    $new->setAttribute('style', $elem->getAttribute('style'));
-
-    $intersect = $DOM->createElement('div');
-    $intersect->setAttribute('id', 'intersect'.countDiv($xpath));
-    $intersect->setAttribute('onClick', 'divClicked(this.id);');
-    $intersect->setAttribute('class', $elem->getAttribute('class'));
-    $intersect->setAttribute('style',$overlay.$elem->getAttribute('style'));
-    $intersect->appendChild($new);
-
-
-    $array = iterator_to_array($elem->childNodes);
-    foreach($array as $child)
+    //TODO do for more than just div tag ??
+    if($elem->tagName == 'div')
     {
-        $new->appendChild($child);
+        $new->setAttribute('id', $elem->getAttribute('id'));
+        $new->setAttribute('class', $elem->getAttribute('class'));
+        $new->setAttribute('style', $elem->getAttribute('style'));
+
+        $intersect = $DOM->createElement('div');
+        $intersect->setAttribute('id', 'intersect' . countDiv($xpath));
+        $intersect->setAttribute('onClick', 'divClicked(this.id);');
+        $intersect->setAttribute('class', $elem->getAttribute('class'));
+        $intersect->setAttribute('style', $overlay . $elem->getAttribute('style'));
+
+        $label = $DOM->createElement('label');
+        $label->setAttribute('style', 'color:#ffffff;');
+        $chkBox = $DOM->createElement('input');
+        $chkBox->setAttribute('type', 'checkbox');
+        $chkBox->setAttribute('id', 'checkbox');
+        $chkBox->setAttribute('onClick', 'checkBoxClicked();');
+        $label->appendChild($chkBox);
+        $txt = $DOM->createTextNode('Keep');
+        $label->appendChild($txt);
+
+        $intersect->appendChild($label);
+        $intersect->appendChild($new);
+
+
+        $array = iterator_to_array($elem->childNodes);
+        foreach ($array as $child) {
+            $new->appendChild($child);
+        }
+        $elem->parentNode->replaceChild($intersect, $elem);
     }
-    $elem->parentNode->replaceChild($intersect,$elem);
 
     return $DOM;
 }
-
-//$DOM = splitDiv($DOM,1);
 
 echo '<div>Original</div>';
 echo '---------------------------------';
@@ -177,8 +191,7 @@ foreach($arrayIdDivToSplit as $toSplitDiv)
 {
     $DOM->loadHTML($DOM->saveHTML());
 
-    $elem = $DOM->getElementById($toSplitDiv)->firstChild;
-
+    $elem = $DOM->getElementById($toSplitDiv)->childNodes->item(1);
     $subTags = iterator_to_array($elem->childNodes);
 
     foreach ($subTags as $child) {

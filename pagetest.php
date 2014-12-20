@@ -1,5 +1,5 @@
 
-<div id="1" style="width:50%">
+<div id="1">
     <div id="2">
         <div id="3">
             <table>
@@ -29,7 +29,27 @@
 
 <div id="7">
     <div id="8">
-        8
+        Je suis la
+        </br>
+        mais pas la
+    </div>
+    <div id="11">
+        le php cest la vie
+    </div>
+    <div id="12">
+        je prefere le java
+    </div>
+    <div id="13">
+        ruby
+        </br>
+        mysql
+        </br>
+        perl
+        </br>
+        python
+    </div>
+    <div id="14">
+        BROOOOOOOOOMMMMMMMMM
     </div>
 </div>
 
