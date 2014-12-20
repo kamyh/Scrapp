@@ -1,5 +1,5 @@
 
-<div id="1">
+<div id="1" style="width:50%">
     <div id="2">
         <div id="3">
             <table>

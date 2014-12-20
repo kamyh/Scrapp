@@ -22,6 +22,7 @@ $xpath = new DOMXPath($DOM);
  * //div[@class="name"]
  * //div[@id="name"]
  */
+/*
 $productsDescription = $xpath->query('//div');  //get all div
 
 $selection = '/html/body';
@@ -29,21 +30,29 @@ $reg = new regex();
 
 $divs = [];
 
+
 foreach($productsDescription as $item)
 {
     echo '<div style="color:#166776;">' .$item->getNodePath().'</div></br>';
     array_push($divs,new Div($item->getAttribute('class'),$item->getAttribute('id'),$item->getAttribute('value'),$item->getAttribute('style'),substr_count($item->getNodePath(), '/')-2,$item->nodeValue));
 }
+*/
 
 $overlay = 'z-index:10000;
-	background-color: rgba(0,0,0,0.5);';
+	background-color: rgba(0,0,0,0.4);';
+
 
 $elem = $DOM->getElementById("1");
 $new= $DOM->createElement('div');
-$new->setAttribute('id', 'n');
+
+$new->setAttribute('id', $elem->getAttribute('id'));
+$new->setAttribute('class', $elem->getAttribute('class'));
+$new->setAttribute('style', $elem->getAttribute('style'));
+
 $intersect = $DOM->createElement('div');
 $intersect->setAttribute('id', 'intersect');
-$intersect->setAttribute('style',$overlay);
+$intersect->setAttribute('class', $elem->getAttribute('class'));
+$intersect->setAttribute('style',$overlay.$elem->getAttribute('style'));
 $intersect->appendChild($new);
 
 
@@ -54,44 +63,20 @@ foreach($array as $child)
 }
 $elem->parentNode->replaceChild($intersect,$elem);
 
+echo '<div>Original</div>';
+echo '---------------------------------';
+
+echo $html;
+
+echo '========================================';
+
+echo '<div>Parsed</div>';
+echo '---------------------------------';
+
 echo $DOM->saveHTML();
 
-echo Tools::depth('html/body/div');
+//echo Tools::depth('html/body/div');
 
-/*
-foreach($divs as $div)
-{
-    //TODO close each div at right moment
-    $toEcho = $div->toString().'</br>';
-
-    if($div->getDepth() < $prevDepth)
-    {
-        $toEcho .= $div->getContent();
-        $toEcho .= '</div></br>';
-    }
-
-    $prevDepth = $div->getDepth();
-    echo '--> '.$prevDepth;
-    echo $toEcho;
-}
-
-/*
-
-foreach($productsDescription as $item)
-{
-    echo '------------------------------------------------';
-    echo '<div style="color:#166776;">' .$reg->isOneDivLvlOne($item->getNodePath()).'</div></br>';
-    echo '<div style="color:#166776;">' .$reg->isOneDivLvlOneWithHook($item->getNodePath()).'</div></br>';
-    echo '<div style="color:#020eff;">' .$item->getNodePath().'</div></br>';
-    echo '<div style="color:red;">'.$item->getAttribute('class').'</div></br>';
-    echo '<div style="color:#ff8f08;">' .$item->getAttribute('id').'</div></br>';
-    echo '<div style="color:#006918;">' .$item->getAttribute('id').'</div></br>';
-    echo $item->nodeValue.'</br>';
-    echo '</br>';
-}
-
-var_dump($xpath);
-*/
 
 
 
