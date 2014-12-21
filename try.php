@@ -1,15 +1,24 @@
-<script language="JavaScript">
-    function divClicked(input)
-    {
-        window.event.stopPropagation();
-        location.href = 'http://127.0.0.1:88/scrapp/try.php' + "?parameter=" + input;
-    }
+<!DOCTYPE html>
+<html>
 
-    function checkBoxClicked()
-    {
-        window.event.stopPropagation();
-    }
-</script>
+<head>
+    <meta charset="UTF-8">
+
+    <title></title>
+    <link rel="stylesheet" href="css/checkbox.css" media="screen" type="text/css" />
+    <script language="JavaScript">
+        function divClicked(input)
+        {
+            window.event.stopPropagation();
+            location.href = 'http://127.0.0.1:88/scrapp/try.php' + "?parameter=" + input;
+        }
+
+        function checkBoxClicked()
+        {
+            window.event.stopPropagation();
+        }
+    </script>
+
 
 <?php
 /**
@@ -140,16 +149,20 @@ function splitDiv($DOM,$id,$color,$xpath)
         $intersect->setAttribute('style', $overlay . $elem->getAttribute('style'));
 
         $label = $DOM->createElement('label');
-        $label->setAttribute('style', 'color:#ffffff;');
+        $label->setAttribute('for', 'squaredTwo');
         $chkBox = $DOM->createElement('input');
         $chkBox->setAttribute('type', 'checkbox');
-        $chkBox->setAttribute('id', 'checkbox');
+        $chkBox->setAttribute('id', 'squaredTwo');
+        $chkBox->setAttribute('value', $elem->getAttribute('id'));
         $chkBox->setAttribute('onClick', 'checkBoxClicked();');
         $label->appendChild($chkBox);
-        $txt = $DOM->createTextNode('Keep');
-        $label->appendChild($txt);
+        //$txt = $DOM->createTextNode('Keep');
+        //$label->appendChild($txt);
+        $chkBoxDiv = $DOM->createElement('div');
+        $chkBoxDiv->setAttribute('class','squaredTwo');
+        $chkBoxDiv->appendChild($label);
 
-        $intersect->appendChild($label);
+        $intersect->appendChild($chkBoxDiv);
         $intersect->appendChild($new);
 
 
@@ -162,6 +175,13 @@ function splitDiv($DOM,$id,$color,$xpath)
 
     return $DOM;
 }
+?>
+
+</head>
+
+<body>
+
+<?php
 
 echo '<div>Original</div>';
 echo '---------------------------------';
@@ -209,4 +229,11 @@ echo $DOM->saveHTML();
 echo countDiv($xpath);
 
 
+?>
+<div class="squaredOne">
+    <input type="checkbox" value="None" id="squaredOne" name="check" checked />
+    <label for="squaredOne"></label>
+</div>
 
+</body>
+</html>
