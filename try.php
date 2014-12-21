@@ -10,27 +10,10 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-    <script language="JavaScript">
-        function divClicked(input)
-        {
-            window.event.stopPropagation();
-            location.href = 'http://127.0.0.1:88/scrapp/try.php' + "?parameter=" + input;
-        }
-
-        function checkBoxClicked(input)
-        {
-            window.event.stopPropagation();
-        }
-    </script>
+    <script type="text/javascript" src="js/scripts.js"></script>
 
 
 <?php
-/**
- * Created by PhpStorm.
- * User: kamhyh
- * Date: 18.12.2014
- * Time: 22:12
- */
 error_reporting(E_ERROR | E_PARSE);
 session_start();
 
@@ -237,7 +220,12 @@ echo $DOM->saveHTML();
 ?>
 
 </br>
-<input type="submit"/>
+
+<div classe="controls" id="controls">
+    <input type="submit"/>
+    <label for="URL">URL <input name="URL" type="text"/></label>
+    <input type="submit" value="Reload" onclick="reset()"/>
+</div>
 
 </body>
 </html>
