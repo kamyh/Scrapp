@@ -19,13 +19,6 @@
 
         function checkBoxClicked(input)
         {
-
-            if(input.type == 'checkbox')
-            {
-                alert(input.id);
-                //window.event.stopPropagation();
-            }
-
             window.event.stopPropagation();
         }
     </script>
@@ -141,7 +134,8 @@ function countDiv($xpath)
 function splitDiv($DOM,$id,$color,$xpath)
 {
     $overlay = 'z-index:10000;
-	background-color:'.$color.';';
+	background-color:'.$color.';
+	padding:8px;';
 
     $elem = $DOM->getElementById($id);
     $new= $DOM->createElement('div');
