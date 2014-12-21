@@ -6,6 +6,10 @@
 
     <title></title>
     <link rel="stylesheet" href="css/checkbox.css" media="screen" type="text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
     <script language="JavaScript">
         function divClicked(input)
         {
@@ -13,8 +17,15 @@
             location.href = 'http://127.0.0.1:88/scrapp/try.php' + "?parameter=" + input;
         }
 
-        function checkBoxClicked()
+        function checkBoxClicked(input)
         {
+
+            if(input.type == 'checkbox')
+            {
+                alert(input.id);
+                //window.event.stopPropagation();
+            }
+
             window.event.stopPropagation();
         }
     </script>
@@ -148,18 +159,20 @@ function splitDiv($DOM,$id,$color,$xpath)
         $intersect->setAttribute('class', $elem->getAttribute('class'));
         $intersect->setAttribute('style', $overlay . $elem->getAttribute('style'));
 
+        $uidChkBox = uniqid();
         $label = $DOM->createElement('label');
-        $label->setAttribute('for', 'squaredTwo');
+        $label->setAttribute('for', 'squaredTwo'.$uidChkBox);
         $chkBox = $DOM->createElement('input');
         $chkBox->setAttribute('type', 'checkbox');
-        $chkBox->setAttribute('id', 'squaredTwo');
-        $chkBox->setAttribute('value', $elem->getAttribute('id'));
-        $chkBox->setAttribute('onClick', 'checkBoxClicked();');
+        $chkBox->setAttribute('id', 'squaredTwo'.$uidChkBox);
+        $chkBox->setAttribute('onClick', 'checkBoxClicked(this);');
+        $chkBox->setAttribute('name', 'chack');
         $label->appendChild($chkBox);
         //$txt = $DOM->createTextNode('Keep');
         //$label->appendChild($txt);
         $chkBoxDiv = $DOM->createElement('div');
         $chkBoxDiv->setAttribute('class','squaredTwo');
+        $chkBoxDiv->setAttribute('onClick', 'checkBoxClicked(this);');
         $chkBoxDiv->appendChild($label);
 
         $intersect->appendChild($chkBoxDiv);
@@ -226,14 +239,11 @@ foreach($arrayIdDivToSplit as $toSplitDiv)
 
 echo $DOM->saveHTML();
 
-echo countDiv($xpath);
-
 
 ?>
-<div class="squaredOne">
-    <input type="checkbox" value="None" id="squaredOne" name="check" checked />
-    <label for="squaredOne"></label>
-</div>
+
+</br>
+<input type="submit"/>
 
 </body>
 </html>
