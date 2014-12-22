@@ -18,7 +18,6 @@ error_reporting(E_ERROR | E_PARSE);
 session_start();
 
 $idDivToSplit = $_GET['parameter'];
-echo $idDivToSplit;
 
 if(isset($_GET['parameter']))
 {
@@ -41,7 +40,6 @@ else
 }
 
 $arrayIdDivToSplit = $_SESSION['arrayIdDivToSplit'];
-var_dump($arrayIdDivToSplit);
 
 require_once('regex.php');
 require_once('Model/Div.php');
@@ -51,35 +49,13 @@ require_once('Model/Color.php');
 /*
  * Prepare the page to parse
  */
-$url = "./pagetest.php";
-//$url = "http://www.qoqa.ch";
+$url = "./pagetest_2.php";
+//$url = "http://www.w3schools.com";
 $html = file_get_contents($url); //get the html returned from the following url
 $DOM = new DOMDocument('1.0', 'UTF-8');
 $DOM->loadHTML($html);
 libxml_clear_errors();
 $xpath = new DOMXPath($DOM);
-
-/*
- * //div[@class="name"]
- * //div[@id="name"]
- */
-/*
-$productsDescription = $xpath->query('//div');  //get all div
-
-$selection = '/html/body';
-$reg = new regex();
-
-$divs = [];
-
-
-foreach($productsDescription as $item)
-{
-    echo '<div style="color:#166776;">' .$item->getNodePath().'</div></br>';
-    array_push($divs,new Div($item->getAttribute('class'),$item->getAttribute('id'),$item->getAttribute('value'),$item->getAttribute('style'),substr_count($item->getNodePath(), '/')-2,$item->nodeValue));
-}
-*/
-
-
 
 function searchDiv($depth,$xpath)
 {
@@ -115,13 +91,21 @@ function countDiv($xpath)
 }
 
 //TODO maybe do this without id selection too
-function splitDiv($DOM,$id,$color,$xpath)
+function splitDiv($DOM,$node,$color,$xpath)
 {
     $overlay = 'z-index:10000;
 	background-color:'.$color.';
 	padding:8px;';
 
-    $elem = $DOM->getElementById($id);
+    $elem = $DOM->getElementById($node->getAttribute('id'));
+
+    if($node->getAttribute('id') == '')
+    {
+        //TODO remember that modif for reparsing
+        $node->setAttribute('id', 'class'.$node->getAttribute('class'));
+        $elem = $DOM->getElementById($node->getAttribute('id'));
+    }
+
     $new= $DOM->createElement('div');
 
     //TODO do for more than just div tag ??
@@ -175,16 +159,6 @@ function splitDiv($DOM,$id,$color,$xpath)
 
 <?php
 
-echo '<div>Original</div>';
-echo '---------------------------------';
-
-//echo $html;
-
-echo '========================================';
-
-echo '<div>Parsed</div>';
-echo '---------------------------------';
-
 $divLvlOne = searchDiv(1,$xpath);
 
 $index = 0;
@@ -192,7 +166,7 @@ $index = 0;
 //color all node lvl 1 with different color
 foreach($divLvlOne as $divNode)
 {
-    $DOM = splitDiv($DOM,$divNode->getAttribute('id'),$colors[$index%count($colors)],$xpath);
+    $DOM = splitDiv($DOM,$divNode,$colors[$index%count($colors)],$xpath);
     $index++;
 }
 
@@ -204,12 +178,13 @@ foreach($arrayIdDivToSplit as $toSplitDiv)
     $DOM->loadHTML($DOM->saveHTML());
 
     $elem = $DOM->getElementById($toSplitDiv)->childNodes->item(1);
+
     $subTags = iterator_to_array($elem->childNodes);
 
     foreach ($subTags as $child) {
         if ($child->nodeType != 3) {
             //echo $child->getAttribute('id').'</br>';
-            $DOM = splitDiv($DOM, $child->getAttribute('id'), $colors[$index % count($colors)], $xpath);
+            $DOM = splitDiv($DOM, $child, $colors[$index % count($colors)], $xpath);
             $index++;
         }
     }

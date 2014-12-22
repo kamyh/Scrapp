@@ -1,7 +1,7 @@
 function divClicked(input)
 {
     window.event.stopPropagation();
-    location.href = 'http://127.0.0.1:88/scrapp/try.php' + "?parameter=" + input;
+    location.href = 'http://127.0.0.1:88/scrapp/tryMore.php' + "?parameter=" + input;
 }
 
 function checkBoxClicked(input)
@@ -11,5 +11,5 @@ function checkBoxClicked(input)
 
 function reset()
 {
-    location.href = 'http://127.0.0.1:88/scrapp/try.php';
+    location.href = 'http://127.0.0.1:88/scrapp/tryMore.php';
 }

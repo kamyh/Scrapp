@@ -1,7 +1,7 @@
 
 <div id="1">
-    <div id="2">
-        <div id="3">
+    <div id="salut">
+        <div class="testClasse">
             <table>
                 <tr>
                     <td>
@@ -36,7 +36,7 @@
     <div id="11">
         le php cest la vie
     </div>
-    <div id="12">
+    <div class="12">
         je prefere le java
     </div>
     <div id="13">
