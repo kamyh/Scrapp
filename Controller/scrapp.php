@@ -14,9 +14,9 @@ $xpath = new DOMXPath($DOM);
  * //div[@id="name"]
  */
 //TODO in class do a enum
-$tagType = 'span';
-$seekBy = 'class';
-$identifier = 'qoqa-price';
+$tagType = 'img';
+$seekBy = 'id';
+$identifier = 'showcase_media_DESKTOP_0';
 $qry = '//'.$tagType.'[@'.$seekBy.'="'.$identifier.'"]';
 $resultQuery = $xpath->query($qry);
 
@@ -30,7 +30,12 @@ echo '<div style="color:red;">'.$item->getAttribute('class').'</div></br>';
 echo '<div style="color:#ff8f08;">' .$item->getAttribute('id').'</div></br>';
 echo '<div style="color:#006918;">' .$item->getAttribute('id').'</div></br>';
 echo $item->nodeValue.'</br>';
+echo $item->getAttribute('src').'</br>';
 echo '</br>';
+
+?>
+
+<img style="width:50%;" src="<?php echo $item->getAttribute('src'); ?>"/>
 
 
 
