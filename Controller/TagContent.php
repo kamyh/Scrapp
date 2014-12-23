@@ -6,20 +6,9 @@ error_reporting(E_ERROR | E_PARSE);
 
 class TagContent
 {
-    public function __construct($url)
+    public function __construct($parser)
     {
-        $this->url = $url;
-        $this->initialisation();
-    }
-
-    private function initialisation()
-    {
-        //TODO extract in other class
-        $html = file_get_contents($this->url);
-        $DOM = new DOMDocument('4.0', 'ISO-8859-1');
-        $DOM->loadHTML('<meta http-equiv="content-type" content="text/html; charset=utf-8">'.($html));
-        libxml_clear_errors();
-        $this->xpath = new DOMXPath($DOM);
+        $this->parser = $parser;
     }
 
     public function build($tagType,$seekBy,$identifier)
@@ -32,7 +21,7 @@ class TagContent
     public function fetch()
     {
         $this->query = '//'.$this->tagType.'[@'.$this->seekBy.'="'.$this->identifier.'"]';
-        $this->domNode = $this->xpath->query($this->query)->item(0);
+        $this->domNode = $this->parser->getXPath()->query($this->query)->item(0);
         $this->style = $this->domNode->getAttribute('style');
     }
 
@@ -81,4 +70,5 @@ class TagContent
     private $query;
     protected $domNode;
     protected $style;
+    protected $parser;
 }
