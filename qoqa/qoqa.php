@@ -13,8 +13,8 @@
  * Time: 23:00
  */
 
-require_once('Controller/TagContent.php');
-require_once('Controller/Parser.php');
+require_once('../Controller/TagContent.php');
+require_once('../Controller/Parser.php');
 
 $parserQoqa = new Parser('http://www.qoqa.ch');
 $parserQwine = new Parser('http://www.qwine.ch');
