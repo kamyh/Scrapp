@@ -1,7 +1,11 @@
-function priceToggle(e) {
-  e.preventDefault();
-  $(this).parent().next().toggleClass('opened');
+function priceToggle(e)
+{
+    e.preventDefault();
+    $(this).parent().next().toggleClass('opened');
 }
 
-$('.price-block__trigger').on('click', priceToggle);
-$('.price-block__trigger').on('touchstart', priceToggle);
+$( document ).ready(function()
+{
+    $('span.price-block__trigger').on('click', priceToggle);
+    $('span.price-block__trigger').on('touchstart', priceToggle);
+});

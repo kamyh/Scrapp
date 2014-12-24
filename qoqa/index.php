@@ -11,9 +11,13 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
     <script src="js/prefixfree.min.js"></script>
     <script src="js/modernizr.js"></script>
     <script src="js/index.js"></script>
+
+
 
     <?php
 /**
