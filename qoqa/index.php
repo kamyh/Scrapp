@@ -113,6 +113,7 @@ $tagImgOfferQoqa->build('img','id','showcase_media_DESKTOP_0');
           <header class="price-block__header">
               <h1 class="price-block__title"><?php echo $tagTitle_1_OfferQoqa->getContentWithTag().' '.$tagTitle_2_OfferQoqa->getContentWithTag(); ?></h1>
               <span class="price-block__cost"><?php echo $tagPriceOfferQoqa->getContentWithTag(); ?></span>
+              <span class="price-block__trigger">▾</span>
           </header>
           <div class="price-block__info">
               <button class="price-block__btn">Link</button>
@@ -124,6 +125,7 @@ $tagImgOfferQoqa->build('img','id','showcase_media_DESKTOP_0');
           <header class="price-block__header">
               <h1 class="price-block__title"><?php echo $tagTitle_1_OfferQooking->getContentWithTag().' '.$tagTitle_2_OfferQooking->getContentWithTag(); ?></h1>
               <span class="price-block__cost"><?php echo $tagPriceOfferQooking->getContentWithTag(); ?></span>
+              <span class="price-block__trigger">▾</span>
           </header>
           <div class="price-block__info">
               <button class="price-block__btn">Link</button>
@@ -135,6 +137,7 @@ $tagImgOfferQoqa->build('img','id','showcase_media_DESKTOP_0');
           <header class="price-block__header">
               <h1 class="price-block__title"><?php echo $tagTitle_1_OfferQSport->getContentWithTag().' '.$tagTitle_2_OfferQSport->getContentWithTag(); ?></h1>
               <span class="price-block__cost"><?php echo $tagPriceOfferQSport->getContentWithTag(); ?></span>
+              <span class="price-block__trigger">▾</span>
           </header>
           <div class="price-block__info">
               <button class="price-block__btn">Link</button>
@@ -146,6 +149,7 @@ $tagImgOfferQoqa->build('img','id','showcase_media_DESKTOP_0');
           <header class="price-block__header">
               <h1 class="price-block__title"><?php echo $tagTitle_1_OfferQWine->getContentWithTag().' '.$tagTitle_2_OfferQWine->getContentWithTag(); ?></h1>
               <span class="price-block__cost"><?php echo $tagPriceOfferQWine->getContentWithTag(); ?></span>
+              <span class="price-block__trigger">▾</span>
           </header>
           <div class="price-block__info">
               <button class="price-block__btn">Link</button>
