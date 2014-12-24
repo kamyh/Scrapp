@@ -12,11 +12,13 @@ html {
 html,
 body {
   height: 100%;
+    background: dimgrey;
 }
 
 @media screen and (min-width: 740px) {
   .wrapper {
     display: flex;
+
   }
 }
 
@@ -93,6 +95,7 @@ body {
 
 .price-block__info {
   padding: 0 0 1.25rem;
+    vertical-align: bottom;
 }
 @media screen and (max-width: 739.9px) {
   .price-block__info {
